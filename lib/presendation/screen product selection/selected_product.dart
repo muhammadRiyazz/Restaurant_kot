@@ -53,111 +53,115 @@ class SelectedProductsPage extends StatelessWidget {
                               final product = selectedProducts[index];
 
                               return Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: ListTile(
-                                    contentPadding: EdgeInsets.only(
-                                        left: 8, top: 8, bottom: 8),
-                                    // leading: Container(
-                                    //   height: 100,
-                                    //   width: 60,
-                                    //   decoration: BoxDecoration(
-                                    //     color: boxbgclr,
-                                    //     borderRadius: BorderRadius.circular(10),
-                                    //   ),
-                                    //   child: ClipRRect(
-                                    //     borderRadius: BorderRadius.circular(10),
-                                    //     child: Image.network(
-                                    //       product.image,
-                                    //       fit: BoxFit.fill,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    title: Text(
-                                      product.name,
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    subtitle: Padding(
-                                      padding: const EdgeInsets.only(top: 5),
-                                      child: Text('₹ ${product.price}/-'),
-                                    ),
-                                    trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        IconButton(
-                                          icon: Container(
-                                              decoration: BoxDecoration(
-                                                  color: mainclr,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                child: Icon(
-                                                  Icons.remove,
-                                                  color: Colors.white,
-                                                  size: 17,
-                                                ),
-                                              )),
-                                          onPressed: () {
-                                            // setState(() {
-                                            //   if (product.quantity == 1) {
-                                            //     // Remove the product if its quantity is 1
-                                            //     selectedProducts.remove(product);
-                                            //   }
-                                            //   if (product.quantity > 0)
-                                            //     product.quantity--;
-                                            // });
-                                          },
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 2),
-                                          child: Text(
-                                            '${product.quantity}',
-                                            style: TextStyle(fontSize: 17),
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: Card(margin: EdgeInsets.all(0),
+                                                    
+                                                    elevation: 2,borderOnForeground: true,shadowColor: const Color.fromARGB(255, 255, 255, 255),
+                                  child: Container(padding:const EdgeInsets.only(bottom: 0,right: 2,left: 5 ,),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(15)),
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.only(
+                                          left: 8, top: 8, bottom: 8),
+                                      // leading: Container(
+                                      //   height: 100,
+                                      //   width: 60,
+                                      //   decoration: BoxDecoration(
+                                      //     color: boxbgclr,
+                                      //     borderRadius: BorderRadius.circular(10),
+                                      //   ),
+                                      //   child: ClipRRect(
+                                      //     borderRadius: BorderRadius.circular(10),
+                                      //     child: Image.network(
+                                      //       product.image,
+                                      //       fit: BoxFit.fill,
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      title: Text(
+                                        product.name,
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      subtitle: Padding(
+                                        padding: const EdgeInsets.only(top: 5),
+                                        child: Text('₹ ${product.price}/-'),
+                                      ),
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon: Container(
+                                                decoration: BoxDecoration(
+                                                    color: mainclr,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5),
+                                                  child: Icon(
+                                                    Icons.remove,
+                                                    color: Colors.white,
+                                                    size: 17,
+                                                  ),
+                                                )),
+                                            onPressed: () {
+                                              // setState(() {
+                                              //   if (product.quantity == 1) {
+                                              //     // Remove the product if its quantity is 1
+                                              //     selectedProducts.remove(product);
+                                              //   }
+                                              //   if (product.quantity > 0)
+                                              //     product.quantity--;
+                                              // });
+                                            },
                                           ),
-                                        ),
-                                        IconButton(
-                                          icon: Container(
-                                              decoration: BoxDecoration(
-                                                  color: mainclr,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: const Padding(
-                                                padding: EdgeInsets.all(5.0),
-                                                child: Icon(
-                                                  Icons.add,
-                                                  size: 17,
-                                                  color: Colors.white,
-                                                ),
-                                              )),
-                                          onPressed: () {
-                                            // setState(() {
-                                            //   product.quantity++;
-                                            //   if (!selectedProducts.contains(product)) {
-                                            //     selectedProducts.add(product);
-                                            //   } else {
-                                            //     // Update the quantity of the existing product
-                                            //     selectedProducts
-                                            //         .firstWhere((p) => p == product)
-                                            //         .quantity = product.quantity;
-                                            //   }
-                                            // });
-                                          },
-                                        ),
-                                      ],
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 2),
+                                            child: Text(
+                                              '${product.quantity}',
+                                              style: TextStyle(fontSize: 17),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: Container(
+                                                decoration: BoxDecoration(
+                                                    color: mainclr,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(5.0),
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    size: 17,
+                                                    color: Colors.white,
+                                                  ),
+                                                )),
+                                            onPressed: () {
+                                              // setState(() {
+                                              //   product.quantity++;
+                                              //   if (!selectedProducts.contains(product)) {
+                                              //     selectedProducts.add(product);
+                                              //   } else {
+                                              //     // Update the quantity of the existing product
+                                              //     selectedProducts
+                                              //         .firstWhere((p) => p == product)
+                                              //         .quantity = product.quantity;
+                                              //   }
+                                              // });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      onLongPress: () {
+                                        // showQuantityInput(product);
+                                      },
                                     ),
-                                    onLongPress: () {
-                                      // showQuantityInput(product);
-                                    },
                                   ),
                                 ),
                               );

@@ -180,81 +180,91 @@ class _ScreenOrdersListState extends State<ScreenOrdersList> {
                 },
                 itemCount: 4,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => _onTap(index),
-                    // onLongPress: () => _onLongPress(index),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: boxbgwhite,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: 5,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          color: mainclr,
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                    ),
-                                    Expanded(
-                                      child: ListTile(
-                                        contentPadding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 10),
-                                        splashColor: const Color.fromARGB(
-                                            0, 255, 255, 255),
-                                        tileColor: const Color.fromARGB(
-                                            0, 255, 255, 255),
-                                        onTap: () => _onTap(index),
-                                        // leading: isMultiSelectMode
-                                        //     ? Checkbox(
-                                        //         activeColor: mainclr,
-                                        //         value: isSelected[index],
-                                        //         onChanged: (bool? value) {
-                                        //           setState(() {
-                                        //             isSelected[index] = value!;
-                                        //           });
-                                        //         },
-                                        //       )
-                                        //     : null,
-                                        title: Text(
-                                          'Order ID: ${orders[index].id}',
-                                          style: const TextStyle(fontSize: 17),
-                                        ),
-                                        subtitle: Text(
-                                            'Items: ${orders[index].itemCount}, Total: ₹${orders[index].totalPrice}'),
-                                        trailing: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            const Icon(
-                                              Icons.timer_sharp,
-                                              color: Color.fromARGB(
-                                                  255, 204, 204, 204),
-                                              size: 18,
-                                            ),
-                                            const SizedBox(
-                                              width: 6,
-                                            ),
-                                            Text(orders[index].time),
-                                          ],
+                  return Card(margin: EdgeInsets.all(3),
+                    
+                    elevation: 2,borderOnForeground: true,shadowColor: const Color.fromARGB(255, 255, 255, 255),
+                    child: InkWell(
+                      onTap: () => _onTap(index),
+                      // onLongPress: () => _onLongPress(index),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: boxbgwhite,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        width: 5,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            color: mainclr,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
+                                      Expanded(
+                                        child: ListTile(
+                                          contentPadding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 10),
+                                          splashColor: const Color.fromARGB(
+                                              0, 255, 255, 255),
+                                          tileColor: const Color.fromARGB(
+                                              0, 255, 255, 255),
+                                          onTap: () => _onTap(index),
+                                          leading: Container(
+                                                    decoration: BoxDecoration(color: mainclr,borderRadius: BorderRadius.circular(10)),
+                                                    child: const Padding(
+                                                      padding: EdgeInsets.all(10.0),
+                                                      child: Icon(Icons.restaurant,color: Color.fromARGB(255, 255, 255, 255),),
+                                                    )),
+                                          //  isMultiSelectMode
+                                          //     ? Checkbox(
+                                          //         activeColor: mainclr,
+                                          //         value: isSelected[index],
+                                          //         onChanged: (bool? value) {
+                                          //           setState(() {
+                                          //             isSelected[index] = value!;
+                                          //           });
+                                          //         },
+                                          //       )
+                                          //     : null,
+                                          title: Text(
+                                            'Order ID: ${orders[index].id}',
+                                            style: const TextStyle(fontSize: 17),
+                                          ),
+                                          subtitle: Text(
+                                              'Items: ${orders[index].itemCount}, Total: ₹${orders[index].totalPrice}'),
+                                          trailing: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Icon(
+                                                Icons.timer_sharp,
+                                                color: Color.fromARGB(
+                                                    255, 204, 204, 204),
+                                                size: 18,
+                                              ),
+                                              const SizedBox(
+                                                width: 6,
+                                              ),
+                                              Text(orders[index].time),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );

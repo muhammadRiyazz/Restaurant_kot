@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:restaurant_kot/consts/colors.dart';
+import 'package:restaurant_kot/presendation/screen%20finished%20order/finished_order_deail.dart';
 import 'package:restaurant_kot/presendation/widgets/buttons.dart';
 import '../screen order details/screen_order_detail.dart';
 
@@ -18,12 +19,12 @@ class Order {
   });
 }
 
-class OrderPage extends StatefulWidget {
+class FinishedOrders extends StatefulWidget {
   @override
-  _OrderPageState createState() => _OrderPageState();
+  _FinishedOrdersState createState() => _FinishedOrdersState();
 }
 
-class _OrderPageState extends State<OrderPage> {
+class _FinishedOrdersState extends State<FinishedOrders> {
   List<Order> orders = [
     Order(id: '001', time: '10:30 AM', itemCount: 3, totalPrice: 150.0),
     Order(id: '002', time: '11:00 AM', itemCount: 2, totalPrice: 100.0),
@@ -58,27 +59,8 @@ class _OrderPageState extends State<OrderPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => OrderDetailsPage(
-            order: Orderr(id: '1', time: '10:10 AM', items: [
-              OrderItem(
-                name: 'Biriyani',
-                image:
-                    'https://t3.ftcdn.net/jpg/04/41/20/18/360_F_441201852_XQqp1wbAQj9udOC3iT7D0ahKgaf71bns.jpg',
-                quantity: 5,
-              ),
-              OrderItem(
-                name: 'Chicken Periperi Mandhi',
-                image:
-                    'https://t3.ftcdn.net/jpg/04/41/20/18/360_F_441201852_XQqp1wbAQj9udOC3iT7D0ahKgaf71bns.jpg',
-                quantity: 5,
-              ),
-              OrderItem(
-                name: 'Chicken Biriyani',
-                image:
-                    'https://t3.ftcdn.net/jpg/04/41/20/18/360_F_441201852_XQqp1wbAQj9udOC3iT7D0ahKgaf71bns.jpg',
-                quantity: 5,
-              ),
-            ]),
+          builder: (context) => FinishedOrderDetail(
+           
           ),
         ),
       );
@@ -100,7 +82,7 @@ class _OrderPageState extends State<OrderPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Running Orders',
+          'Finished Orders',
           style: TextStyle(fontSize: 19),
         ),
         actions: [
@@ -150,7 +132,7 @@ class _OrderPageState extends State<OrderPage> {
                     elevation: 5,borderOnForeground: true,shadowColor: const Color.fromARGB(255, 255, 255, 255),
                         child: InkWell(
                           onTap: () => _onTap(index),
-                          onLongPress: () => _onLongPress(index),
+                          // onLongPress: () => _onLongPress(index),
                           child: Container(
                             decoration: BoxDecoration(
                               color: boxbgwhite,
@@ -163,39 +145,13 @@ class _OrderPageState extends State<OrderPage> {
                                     children: [
                                       Row(
                                         children: [
-                                          SizedBox(width: 10),
-                                          Container(
-                                            width: 5,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              color: mainclr,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
+                                          
                                           Expanded(
                                             child: ListTile(
                                               splashColor: Colors.transparent,
                                               tileColor: Colors.transparent,
                                               onTap: () => _onTap(index),
-                                              leading: isMultiSelectMode
-                                                  ? Checkbox(
-                                                      activeColor: mainclr,
-                                                      value: isSelected[index],
-                                                      onChanged: (bool? value) {
-                                                        setState(() {
-                                                          isSelected[index] =
-                                                              value!;
-                                                        });
-                                                      },
-                                                    )
-                                                  :  Container(
-                                                    decoration: BoxDecoration(color: mainclr,borderRadius: BorderRadius.circular(10)),
-                                                    child: const Padding(
-                                                      padding: EdgeInsets.all(10.0),
-                                                      child: Icon(Icons.restaurant,color: Color.fromARGB(255, 255, 255, 255),),
-                                                    )),
-
+                                              
                                               title: Text(
                                                 'Order ID: ${orders[index].id}',
                                                 style:
@@ -204,19 +160,20 @@ class _OrderPageState extends State<OrderPage> {
                                               subtitle: Text(
                                                 'Items: ${orders[index].itemCount}, Total: ₹${orders[index].totalPrice}',
                                               ),
+                                              leading: Icon(Icons.restaurant,color: mainclr,),
                                               trailing: Container(
                                                 decoration: BoxDecoration(
-                                                  color: mainclr,
+                                                  color: const Color.fromARGB(255, 244, 244, 244),
                                                   borderRadius:
                                                       BorderRadius.circular(10),
                                                 ),
-                                                child: Padding(
+                                                child: const Padding(
                                                   padding:
-                                                      const EdgeInsets.all(12.0),
+                                                      EdgeInsets.all(12.0),
                                                   child: Text(
                                                     'TBv3 1',
                                                     style: TextStyle(
-                                                      color: const Color.fromARGB(255, 255, 255, 255),
+                                                      color: mainclr,
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 12,
                                                     ),

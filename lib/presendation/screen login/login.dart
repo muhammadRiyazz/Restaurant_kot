@@ -54,7 +54,16 @@ class _ScreenLoginState extends State<ScreenLogin> {
                   'assets/img/loginpage/login.jpg',
                   fit: BoxFit.contain,
                 ),
-                Container(),
+                Container(
+
+                  // child:  Column(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+
+                   
+                  // ],),
+                ),
               ],
             ),
             Padding(
@@ -87,7 +96,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Center(
+                          const Center(
                             child: Text(
                               'Login',
                               style: TextStyle(
@@ -184,7 +193,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                   },
                                 ));
                               },
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
@@ -218,6 +227,19 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           //       'Settings',
                           //       style: TextStyle(fontWeight: FontWeight.bold),
                           //     )),
+SizedBox(height: 30,),
+                           Row(mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: mainclr,)),
+                                 child: IconButton(
+                                  
+                                  onPressed: (){}, icon: const Row(
+                                                       
+                                                       children: [Icon(Icons.support_agent_outlined,size: 18,),Text('  Support',style: TextStyle(fontSize: 16),)],)),
+                               ),
+                             ],
+                           )
                         ],
                       ),
                     ),

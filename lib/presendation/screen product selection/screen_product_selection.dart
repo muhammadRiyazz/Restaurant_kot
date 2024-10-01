@@ -61,8 +61,7 @@ class _ProductChoosingPageState extends State<ProductChoosingPage> {
     }
   }
 
-  // Method to navigate to the selected products page
-  void navigateToSelectedProductsPage() {
+ void navigateToSelectedProductsPage() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -201,28 +200,27 @@ class _ProductChoosingPageState extends State<ProductChoosingPage> {
                       height: 10,
                     ),
                     Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
-                                            decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                                            ),
-                                            child: const ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 3),
-                        splashColor: Color.fromARGB(0, 255, 255, 255),
-                        tileColor: Color.fromARGB(0, 255, 255, 255),
-                        title: Text(
-                          'Table No: TB 001',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        // subtitle: Text('Order No: ORD001', style: TextStyle(
-                        //       fontSize: 15, fontWeight: FontWeight.w500)),
-                                             
-                                            ),
-                                          ),
+                        child: const ListTile(
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                          splashColor: Color.fromARGB(0, 255, 255, 255),
+                          tileColor: Color.fromARGB(0, 255, 255, 255),
+                          title: Text(
+                            'Table No: TB 001',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                          // subtitle: Text('Order No: ORD001', style: TextStyle(
+                          //       fontSize: 15, fontWeight: FontWeight.w500)),
+                        ),
                       ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: TextField(
@@ -264,7 +262,7 @@ class _ProductChoosingPageState extends State<ProductChoosingPage> {
                         },
                       ),
                     ),
-                     
+
                     Expanded(
                       child: RefreshIndicator(
                         backgroundColor: mainclr,
@@ -283,110 +281,121 @@ class _ProductChoosingPageState extends State<ProductChoosingPage> {
                             itemCount: filteredProducts.length,
                             itemBuilder: (context, index) {
                               final product = filteredProducts[index];
-                              return Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: ListTile(
-                                  contentPadding: EdgeInsets.only(
-                                      left: 8, top: 8, bottom: 8),
-                                  leading: Container(
-                                    height: 100,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                      color: boxbgclr,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(
-                                        product.image,
-                                        fit: BoxFit.fill,
+                              return Card(
+                                margin: EdgeInsets.all(3),
+                                elevation: 2,
+                                borderOnForeground: true,
+                                shadowColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.only(
+                                        left: 8, top: 8, bottom: 8),
+                                    leading: Container(
+                                      height: 100,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                        color: boxbgclr,
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ),
-                                  ),
-                                  title: Text(
-                                    product.name,
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  subtitle: Padding(
-                                    padding: const EdgeInsets.only(top: 5),
-                                    child: Text('₹ ${product.price}/-'),
-                                  ),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      IconButton(
-                                        icon: Container(
-                                            decoration: BoxDecoration(
-                                                color: mainclr,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: const Padding(
-                                              padding: EdgeInsets.all(5),
-                                              child: Icon(
-                                                Icons.remove,
-                                                color: Colors.white,
-                                                size: 17,
-                                              ),
-                                            )),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (product.quantity == 1) {
-                                              // Remove the product if its quantity is 1
-                                              selectedProducts.remove(product);
-                                            }
-                                            if (product.quantity > 0) {
-                                              product.quantity--;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 2),
-                                        child: Text(
-                                          '${product.quantity}',
-                                          style: TextStyle(fontSize: 17),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          product.image,
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
-                                      IconButton(
-                                        icon: Container(
-                                            decoration: BoxDecoration(
-                                                color: mainclr,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: const Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Icon(
-                                                Icons.add,
-                                                size: 17,
-                                                color: Colors.white,
-                                              ),
-                                            )),
-                                        onPressed: () {
-                                          setState(() {
-                                            product.quantity++;
-                                            if (!selectedProducts
-                                                .contains(product)) {
-                                              selectedProducts.add(product);
-                                            } else {
-                                              // Update the quantity of the existing product
-                                              selectedProducts
-                                                  .firstWhere(
-                                                      (p) => p == product)
-                                                  .quantity = product.quantity;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ],
+                                    ),
+                                    title: Text(
+                                      product.name,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(top: 5),
+                                      child: Text('₹ ${product.price}/-'),
+                                    ),
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: Container(
+                                              decoration: BoxDecoration(
+                                                  color: mainclr,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(5),
+                                                child: Icon(
+                                                  Icons.remove,
+                                                  color: Colors.white,
+                                                  size: 17,
+                                                ),
+                                              )),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (product.quantity == 1) {
+                                                // Remove the product if its quantity is 1
+                                                selectedProducts
+                                                    .remove(product);
+                                              }
+                                              if (product.quantity > 0) {
+                                                product.quantity--;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 2),
+                                          child: Text(
+                                            '${product.quantity}',
+                                            style: TextStyle(fontSize: 17),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: Container(
+                                              decoration: BoxDecoration(
+                                                  color: mainclr,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(5.0),
+                                                child: Icon(
+                                                  Icons.add,
+                                                  size: 17,
+                                                  color: Colors.white,
+                                                ),
+                                              )),
+                                          onPressed: () {
+                                            setState(() {
+                                              product.quantity++;
+                                              if (!selectedProducts
+                                                  .contains(product)) {
+                                                selectedProducts.add(product);
+                                              } else {
+                                                // Update the quantity of the existing product
+                                                selectedProducts
+                                                        .firstWhere(
+                                                            (p) => p == product)
+                                                        .quantity =
+                                                    product.quantity;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    onLongPress: () {
+                                      showQuantityInput(product);
+                                    },
                                   ),
-                                  onLongPress: () {
-                                    showQuantityInput(product);
-                                  },
                                 ),
                               );
                             },

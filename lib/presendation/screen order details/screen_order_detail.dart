@@ -81,8 +81,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   }
 
   void _printKOT() {
-    // Logic to handle KOT printing based on added and canceled items
-    print('Printing KOT...');
+
   }
 
   void _printBill() {
@@ -272,87 +271,91 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   final item = _items[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 10, right: 4),
-                      leading: Container(
-                        height: 100,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: boxbgclr,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            item.image,
-                            fit: BoxFit.fill,
+                  return Card(margin: EdgeInsets.all(3),
+                    
+                    elevation: 3,borderOnForeground: true,shadowColor: const Color.fromARGB(255, 255, 255, 255),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.only(
+                            top: 10, bottom: 10, left: 10, right: 4),
+                        leading: Container(
+                          height: 100,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: boxbgclr,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                      ), // Replace with asset image if needed
-                      title: Text(
-                        item.name,
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Amount : ₹ 150/-'),
-                          Text('Orderd Qty : 5'),
-                        ],
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Container(
-                                decoration: BoxDecoration(
-                                    color: index == 2 ? Colors.red : mainclr,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(5),
-                                  child: Icon(
-                                    Icons.remove,
-                                    color: Colors.white,
-                                    size: 17,
-                                  ),
-                                )),
-                            onPressed: () {
-                              _changeQuantity(item, -1);
-                            },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              item.image,
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                          index != 1
-                              ? Text(
-                                  '2',
-                                  style: TextStyle(
+                        ), // Replace with asset image if needed
+                        title: Text(
+                          item.name,
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Amount : ₹ 150/-'),
+                            Text('Orderd Qty : 5'),
+                          ],
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Container(
+                                  decoration: BoxDecoration(
+                                      color: index == 2 ? Colors.red : mainclr,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Icon(
+                                      Icons.remove,
+                                      color: Colors.white,
+                                      size: 17,
+                                    ),
+                                  )),
+                              onPressed: () {
+                                _changeQuantity(item, -1);
+                              },
+                            ),
+                            index != 1
+                                ? Text(
+                                    '2',
+                                    style: TextStyle(
+                                        color: mainclr,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  )
+                                : SizedBox(),
+                            IconButton(
+                              icon: Container(
+                                  decoration: BoxDecoration(
                                       color: mainclr,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
-                                )
-                              : SizedBox(),
-                          IconButton(
-                            icon: Container(
-                                decoration: BoxDecoration(
-                                    color: mainclr,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 17,
-                                  ),
-                                )),
-                            onPressed: () {
-                              _changeQuantity(item, 1);
-                            },
-                          ),
-                        ],
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                      size: 17,
+                                    ),
+                                  )),
+                              onPressed: () {
+                                _changeQuantity(item, 1);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
