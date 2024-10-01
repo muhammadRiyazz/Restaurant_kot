@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_kot/consts/colors.dart';
 import 'dart:async';
 
-import 'package:restaurant_kot/presendation/screen%20home/screen_home.dart';  // For using the Timer function
+import 'package:restaurant_kot/presendation/screen%20home/screen_home.dart';
+import 'package:restaurant_kot/presendation/screen%20login/login.dart';  // For using the Timer function
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Navigate to HomeScreen after 3 seconds
     Timer(const Duration(seconds: 4), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const ScreenLogin()),
       );
     });
   }

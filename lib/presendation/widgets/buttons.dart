@@ -10,15 +10,15 @@ class MainButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onpress, // Your onPressed function
       child: Text(
-        'Merge & Print',
+        label,
         style: TextStyle(color: Colors.white),
       ),
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonclr, // Set the button background color
 
-        minimumSize: Size(double.infinity, 50), // Full-width button
+        minimumSize: Size(double.infinity, 55), // Full-width button
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15), // Border radius of 10
+          borderRadius: BorderRadius.circular(20), // Border radius of 10
         ),
       ),
     );
