@@ -30,9 +30,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
       Future.delayed(Duration(seconds: 2), () {
         setState(() {
           _isLoading = false;
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-            return HomeScreen();
-          },));
+          Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) {
+              return HomeScreen();
+            },
+          ));
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Login successful!')),
@@ -56,14 +58,13 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 ),
                 Container(
 
-                  // child:  Column(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                  //   children: [
+                    // child:  Column(
+                    //   mainAxisAlignment: MainAxisAlignment.end,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
 
-                   
-                  // ],),
-                ),
+                    // ],),
+                    ),
               ],
             ),
             Padding(
@@ -72,11 +73,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: 270,
+                    height: 250,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 35, horizontal: 20),
+                        vertical: 15, horizontal: 20),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(18.0),
@@ -93,19 +94,25 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     child: Form(
                       key: _formKey,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Center(
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                color: mainclr,
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            height: 35,
+                            child: Align(
+                              alignment: Alignment
+                                  .center, // Align to the start (left side)
+                              child: Image.asset(
+                                'assets/img/logo/splashlogo.png',
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
+
                           SizedBox(height: 30),
                           // Username Field
                           TextFormField(
@@ -179,7 +186,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           SizedBox(height: 20),
                           // Login Button
                           _isLoading
-                              ? Center(child: CircularProgressIndicator())
+                              ? Center(
+                                  child: LinearProgressIndicator(
+                                  color: mainclr,
+                                  backgroundColor: Colors.white,
+                                ))
                               : MainButton(label: 'Login', onpress: _login),
                           const SizedBox(
                             height: 5,
@@ -227,19 +238,37 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           //       'Settings',
                           //       style: TextStyle(fontWeight: FontWeight.bold),
                           //     )),
-SizedBox(height: 30,),
-                           Row(mainAxisAlignment: MainAxisAlignment.center,
-                             children: [
-                               Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
-                                border: Border.all(color: mainclr,)),
-                                 child: IconButton(
-                                  
-                                  onPressed: (){}, icon: const Row(
-                                                       
-                                                       children: [Icon(Icons.support_agent_outlined,size: 18,),Text('  Support',style: TextStyle(fontSize: 16),)],)),
-                               ),
-                             ],
-                           )
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                // decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(15),
+                                //     border: Border.all(
+                                //       color: mainclr,
+                                //     )),
+                                child: IconButton(
+                                    onPressed: () {},
+                                    icon: const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.support_agent_outlined,
+                                          size: 17,
+                                        ),
+                                        Text(
+                                          '  Support',
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
