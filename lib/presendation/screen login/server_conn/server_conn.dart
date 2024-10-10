@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_kot/application/server%20conn/server_conn_bloc.dart';
 import 'package:restaurant_kot/consts/colors.dart';
 import 'package:restaurant_kot/presendation/widgets/buttons.dart';
 
@@ -26,12 +28,12 @@ class ServerConnectionPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: mainclrbg,
       appBar: AppBar(
-          actions: [
+          actions: const [
             SizedBox(
               width: 60,
             )
           ],
-          title: Center(
+          title: const Center(
               child: Text(
             'Server Connection',
             style: TextStyle(fontSize: 16),
@@ -124,9 +126,51 @@ class ServerConnectionPage extends StatelessWidget {
                       SizedBox(height: 20),
 
                       // Confirm Button
-                      MainButton(
-                        onpress: () {},
-                        label: 'Confirm',
+                      BlocConsumer<ServerConnBloc, ServerConnState>(
+                        listener: (context, state) {
+   if (state.conn) {
+Navigator.popUntil(context, (route) => route.isFirst);
+                          }
+
+                          if (state.connErrorMsg != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: mainclr,
+                                  content: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Sorry!',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                        Text(
+                                          state.passcodeErrorMsg.toString(),
+                                          style: const TextStyle(fontSize: 15),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                            );
+                          }                        },
+                        builder: (context, state) {
+                          return     state.isLoading
+                              ? const LinearProgressIndicator(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  color: mainclr,
+                                )
+                              : MainButton(
+                            onpress: () {
+                              if (_serverFormKey.currentState!.validate()) {}
+                            },
+                            label: 'Confirm',
+                          );
+                        },
                       ),
                     ],
                   ),
