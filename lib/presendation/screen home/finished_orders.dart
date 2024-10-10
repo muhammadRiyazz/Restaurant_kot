@@ -1,9 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:restaurant_kot/consts/colors.dart';
-import 'package:restaurant_kot/presendation/screen%20finished%20order/finished_order_deail.dart';
-import 'package:restaurant_kot/presendation/widgets/buttons.dart';
-import '../screen order details/screen_order_detail.dart';
+
 
 class Order {
   final String id;
@@ -34,37 +32,11 @@ class _FinishedOrdersState extends State<FinishedOrders> {
   ];
 
   List<bool> isSelected = [];
-  bool isMultiSelectMode = false;
 
   @override
   void initState() {
     super.initState();
     isSelected = List<bool>.filled(orders.length, false);
-  }
-
-  void _onLongPress(int index) {
-    setState(() {
-      isMultiSelectMode = true;
-      isSelected[index] = !isSelected[index]; // Toggle the selection
-    });
-  }
-
-  void _onTap(int index) {
-    if (isMultiSelectMode) {
-      setState(() {
-        isSelected[index] = !isSelected[index];
-      });
-    } else {
-      // Navigate to order details page
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => FinishedOrderDetail(
-           
-          ),
-        ),
-      );
-    }
   }
 
   void mergeOrders() {
@@ -75,160 +47,248 @@ class _FinishedOrdersState extends State<FinishedOrders> {
         .map((entry) => entry.value)
         .toList();
     log('Merging Orders: ${selectedOrders.map((o) => o.id).join(', ')}');
+    // Implement your merge logic here
   }
 
   @override
   Widget build(BuildContext context) {
+    // Determine screen size for responsiveness
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Determine the number of grid columns based on screen width
+    int crossAxisCount = 1;
+    if (screenWidth >= 900) {
+      crossAxisCount = 3;
+    } else if (screenWidth >= 600) {
+      crossAxisCount = 2;
+    }
+
+    // Define dynamic text size and box size adjustments based on screen size
+    double textSize = screenWidth < 600 ? 14 : 16; // Adjust for phone/tablet
+    // double boxImageSize = screenWidth < 600 ? 40 : 50; // Box image size
+    double boxPadding =
+        screenWidth < 600 ? 8 : 12; // Padding based on screen size
+
+    // Adjust childAspectRatio based on crossAxisCount
+    double childAspectRatio;
+    switch (crossAxisCount) {
+      case 1:
+        childAspectRatio = 2.7;
+        break;
+      case 2:
+        childAspectRatio = 2.5;
+        break;
+      case 3:
+        childAspectRatio = 2.5;
+        break;
+      default:
+        childAspectRatio = 2.5;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Finished Orders',
           style: TextStyle(fontSize: 19),
         ),
-        actions: [
-          if (isMultiSelectMode)
-            IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                setState(() {
-                  isMultiSelectMode = false;
-                  isSelected = List<bool>.filled(orders.length, false);
-                });
-              },
-            ),
-        ],
       ),
       body: RefreshIndicator(
         backgroundColor: mainclr,
         color: mainclrbg,
         onRefresh: () async {
-          log('message');
+          log('Page refreshed');
+          // Implement your refresh logic here
         },
         child: LayoutBuilder(
           builder: (context, constraints) {
-            int crossAxisCount = 1;
-            double width = constraints.maxWidth;
-
-            // Show 2 tiles per row if the width is more than 600px (typical tablet size)
-            if (width >= 600) {
-              crossAxisCount = 2;
-            }
-
-            return Column(
-              children: [
-                Expanded(
-                  child: GridView.builder(
-                    padding: EdgeInsets.all(5),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 2.8,
+            return Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.all(3),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: childAspectRatio,
+                ),
+                itemCount: orders.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: EdgeInsets.zero,
+                    elevation: 5,
+                    shadowColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    itemCount: orders.length,
-                    itemBuilder: (context, index) {
-                      return Card(margin: EdgeInsets.all(3),
-                    
-                    elevation: 5,borderOnForeground: true,shadowColor: const Color.fromARGB(255, 255, 255, 255),
-                        child: InkWell(
-                          onTap: () => _onTap(index),
-                          // onLongPress: () => _onLongPress(index),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: boxbgwhite,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
+                    child: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.all(boxPadding + 5),
+                        decoration: BoxDecoration(
+                          color: boxbgwhite,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
                               children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          
-                                          Expanded(
-                                            child: ListTile(
-                                              splashColor: Colors.transparent,
-                                              tileColor: Colors.transparent,
-                                              onTap: () => _onTap(index),
-                                              
-                                              title: Text(
-                                                'Order ID: ${orders[index].id}',
-                                                style:
-                                                    const TextStyle(fontSize: 17),
-                                              ),
-                                              subtitle: Text(
-                                                'Items: ${orders[index].itemCount}, Total: ₹${orders[index].totalPrice}',
-                                              ),
-                                              leading: Icon(Icons.restaurant,color: mainclr,),
-                                              trailing: Container(
-                                                decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(255, 244, 244, 244),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: const Padding(
-                                                  padding:
-                                                      EdgeInsets.all(12.0),
-                                                  child: Text(
-                                                    'TBv3 1',
-                                                    style: TextStyle(
-                                                      color: mainclr,
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 255, 255, 255),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Icon(
+                                      Icons.restaurant,
+                                      color: mainclr,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Order ID: ${orders[index].id}',
+                                      style: TextStyle(
+                                        fontSize: textSize,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      Divider(
-                                        color: Color.fromARGB(255, 236, 236, 236),
+                                    ),
+                                    Text(
+                                      'Total: ₹${orders[index].totalPrice}',
+                                      style: TextStyle(
+                                        fontSize: textSize - 2,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Icon(
-                                              Icons.timer_sharp,
-                                              color: Color.fromARGB(
-                                                  255, 204, 204, 204),
-                                              size: 18,
-                                            ),
-                                            SizedBox(width: 6),
-                                            Text(orders[index].time),
-                                          ],
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                        255, 237, 237, 237),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      'Table 1',
+                                      style: TextStyle(
+                                        color: mainclr,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: textSize - 4,
                                       ),
-                                      SizedBox(height: 10),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
+                            // Order Header
+                            // ListTile(
+                            //   isThreeLine: true,
+                            //   contentPadding: EdgeInsets.symmetric(
+                            //       vertical: 0, horizontal: 3),
+                            //   splashColor: Colors.transparent,
+                            //   tileColor: Colors.transparent,
+                            //   onTap: () => _onTap(index),
+                            //   leading: isMultiSelectMode
+                            //       ? Checkbox(
+                            //           activeColor: mainclr,
+                            //           value: isSelected[index],
+                            //           onChanged: (bool? value) {
+                            //             setState(() {
+                            //               isSelected[index] = value!;
+                            //             });
+                            //           },
+                            //         )
+                            //       : Container(
+                            //           decoration: BoxDecoration(
+                            //               color: mainclr,
+                            //               borderRadius:
+                            //                   BorderRadius.circular(10)),
+                            //           child: const Padding(
+                            //             padding: EdgeInsets.all(10.0),
+                            //             child: Icon(
+                            //               Icons.restaurant,
+                            //               color: Colors.white,
+                            //             ),
+                            //           ),
+                            //         ),
+                            //   title: Text(
+                            //     'Order ID: ${orders[index].id}',
+                            //     style: TextStyle(
+                            //       fontSize: textSize,
+                            //       fontWeight: FontWeight.bold,
+                            //     ),
+                            //   ),
+                            //   subtitle: Text(
+                            //     'Total: ₹${orders[index].totalPrice}',
+                            //     style: TextStyle(
+                            //       fontSize: textSize - 2,
+                            //     ),
+                            //   ),
+                            //   trailing: Container(
+                            //     decoration: BoxDecoration(
+                            //       color: mainclr,
+                            //       borderRadius: BorderRadius.circular(10),
+                            //     ),
+                            //     child: Padding(
+                            //       padding: const EdgeInsets.all(10.0),
+                            //       child: Text(
+                            //         'Table 1',
+                            //         style: TextStyle(
+                            //           color: Colors.white,
+                            //           fontWeight: FontWeight.bold,
+                            //           fontSize: textSize - 4,
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                            // const Text('data')
+                            const Divider(
+                              color: Color.fromARGB(255, 236, 236, 236),
+                            ),
+                            // Order Time
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Items: ${orders[index].itemCount}',
+                                  style: TextStyle(
+                                    fontSize: textSize,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.timer_sharp,
+                                      color: Color.fromARGB(255, 204, 204, 204),
+                                      size: 18,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      orders[index].time,
+                                      style: TextStyle(
+                                        fontSize: textSize - 3,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  ),
-                ),
-                if (isMultiSelectMode &&
-                    isSelected.where((selected) => selected).length >= 2)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: MainButton(
-                      label: 'Merge & Print',
-                      onpress: () {
-                        mergeOrders();
-                      },
+                      ),
                     ),
-                  ),
-              ],
+                  );
+                },
+              ),
             );
           },
         ),

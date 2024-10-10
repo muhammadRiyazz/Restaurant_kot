@@ -7,19 +7,26 @@ import 'package:restaurant_kot/presendation/screen%20product%20selection/screen_
 class Tablespart extends StatelessWidget {
   Tablespart({super.key});
 
-  // Sample options for expansion tile
   final List<String> options = ['Option 1', 'Option 2', 'Option 3'];
 
   @override
   Widget build(BuildContext context) {
-    // Get screen size
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
-    // Determine the number of grid columns based on screen width
-    int crossAxisCount = screenWidth < 600
-        ? 2
-        : 3; // 2 columns for phones, 4 columns for tablets
+    // CrossAxisCount based on screen width
+    int crossAxisCount =
+        screenWidth < 600 ? 2 : 3; // 2 columns for phones, 3 for tablets
 
+    // Define dynamic text size and box size adjustments based on screen size
+    double textSize = screenWidth < 600 ? 16 : 20; // Larger text on tablets
+    double boxImageSize =
+        screenWidth < 600 ? 45 : 60; // Box image size for mobile and tablet
+    double boxPadding =
+        screenWidth < 600 ? 10 : 20; // Padding based on screen size
+    double childAspectRatio = screenWidth < 600
+        ? (screenWidth / (screenHeight / 1.9)) // Adjust for mobile
+        : (screenWidth / (screenHeight / .5)); // Adjust for tablet
     return RefreshIndicator(
       backgroundColor: mainclr,
       color: mainclrbg,
@@ -31,47 +38,59 @@ class Tablespart extends StatelessWidget {
           children: [
             // ListView with ExpansionTile
             ListView(
-              shrinkWrap: true, // Makes ListView as small as possible
-              physics:
-                  const NeverScrollableScrollPhysics(), // Disable ListView scrolling (handled by SingleChildScrollView)
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               children: [
-                ExpansionTile(
-                  collapsedBackgroundColor: boxbgwhite,
-                  backgroundColor: boxbgwhite,
-                  leading: Icon(
-                    Icons.line_weight_sharp,
-                    color: mainclr,
-                  ),
-                  title: const Text('Choose Floor'),
-                  children: options.map((option) {
-                    return Container(
-                      decoration: BoxDecoration(color: Colors.white),
-                      child: ListTile(
-                        title: Text(option),
-                        onTap: () {},
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 206, 206, 206)
+                            .withOpacity(0.3), // Shadow color
+                        spreadRadius: 1, // How much the shadow spreads
+                        blurRadius: 7, // Softness of the shadow
+                        offset:
+                            const Offset(0, 4), // Position of the shadow (x, y)
                       ),
-                    );
-                  }).toList(),
+                    ],
+                  ),
+                  child: ExpansionTile(
+                    collapsedBackgroundColor: boxbgwhite,
+                    backgroundColor: boxbgwhite,
+                    leading:
+                        const Icon(Icons.line_weight_sharp, color: mainclr),
+                    title: const Text('Choose Floor'),
+                    children: options.map((option) {
+                      return Container(
+                        decoration: const BoxDecoration(color: Colors.white),
+                        child: ListTile(
+                          title: Text(option),
+                          onTap: () {},
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ],
             ),
             // GridView.builder with dynamic columns
             GridView.builder(
-              shrinkWrap: true, // Make GridView as small as needed
-              physics:
-                  const NeverScrollableScrollPhysics(), // Disable GridView scrolling
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(vertical: 10),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 1.1,
+                childAspectRatio: childAspectRatio,
                 crossAxisCount: crossAxisCount, // Dynamic number of columns
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,
               ),
-              itemCount: 12, // Example number of items
+              itemCount: 12,
               itemBuilder: (context, index) {
-                return Card(margin: EdgeInsets.all(3),
-                    
-                    elevation: 5,borderOnForeground: true,shadowColor: const Color.fromARGB(255, 255, 255, 255),
+                return Card(
+                  margin: const EdgeInsets.all(3),
+                  elevation: 8,
+                  borderOnForeground: true,
+                  shadowColor: const Color.fromARGB(255, 241, 241, 241),
                   child: InkWell(
                     onTap: () {
                       if (index == 0) {
@@ -83,19 +102,19 @@ class Tablespart extends StatelessWidget {
                       } else {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return const ScreenOrdersList();
+                            return ScreenOrdersList();
                           },
                         ));
                       }
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: EdgeInsets.all(boxPadding),
                       decoration: BoxDecoration(
                         color: boxbgwhite,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
@@ -104,85 +123,86 @@ class Tablespart extends StatelessWidget {
                               style: TextStyle(
                                   color: mainclr,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16),
+                                  fontSize: textSize),
                             ),
                           ),
-                          Divider(height: 0,),
+                          const Divider(height: 0),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  // color: mainclr,
                                 ),
                                 child: Center(
                                   child: Container(
-                                      width: 60,
-                                      decoration: BoxDecoration(color:  index == 0 || index == 1 || index == 2
-                                                ? mainclr:Colors.white,
-                                          borderRadius: BorderRadius.circular(8),
-                                          border: Border.all(color: mainclr)),
-                                      height: 45,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child:
-                                            index == 0 || index == 1 || index == 2
-                                                ? Image.asset(
-                                                    'assets/img/table/tableicon.png',
-                                                    fit: BoxFit.contain,
-                                                    color: Colors.white,
-                                                  )
-                                                : Image.asset(
-                                                    'assets/img/table/emptytable.png',
-                                                    fit: BoxFit.contain,
-                                                    // color: Colors.white,
-                                                  ),
-                                      )),
+                                    width: boxImageSize + 8,
+                                    height: boxImageSize,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          index == 0 || index == 1 || index == 2
+                                              ? mainclr
+                                              : Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(color: mainclr),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 6),
+                                      child: Image.asset(
+                                        index == 0 || index == 1 || index == 2
+                                            ? 'assets/img/table/tableicon.png'
+                                            : 'assets/img/table/emptytable.png',
+                                        fit: BoxFit.contain,
+                                        color: index == 0 ||
+                                                index == 1 ||
+                                                index == 2
+                                            ? Colors.white
+                                            : null,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Column(
+                              const SizedBox(width: 10),
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     '5 Orders',
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 17,
+                                        fontSize: textSize -
+                                            1, // slightly smaller for order info
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Text(
                                     '10 : 30 Am',
                                     style: TextStyle(
                                         color: Colors.grey,
-                                        fontSize: 14,
+                                        fontSize:
+                                            textSize - 4, // smaller for time
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                width: 0,
-                              ),
                             ],
                           ),
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Amount',
                                 style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontSize: textSize - 3,
                                     fontWeight: FontWeight.w400),
                               ),
                               Text(
                                 '₹ 2500',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 15,
+                                    fontSize: textSize - 2,
                                     fontWeight: FontWeight.w500),
                               )
                             ],
