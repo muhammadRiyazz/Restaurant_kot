@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_kot/consts/colors.dart';
 import 'package:restaurant_kot/presendation/screen%20home/screen_home.dart';
+import 'package:restaurant_kot/presendation/screen%20login/passcose/passcode.dart';
 import 'package:restaurant_kot/presendation/screen%20login/screen_settings.dart';
 import 'package:restaurant_kot/presendation/widgets/buttons.dart';
 
@@ -200,7 +201,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return SettingsPage();
+                                    return PasscodePage();
                                   },
                                 ));
                               },

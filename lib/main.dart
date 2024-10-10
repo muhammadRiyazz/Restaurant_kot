@@ -1,10 +1,10 @@
-
-
 import 'dart:async';
 import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_kot/application/providers/providers.dart';
 import 'package:restaurant_kot/consts/colors.dart';
 import 'presendation/screen splash/screen_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,17 +21,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-      List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
+  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
 
- final Connectivity connectivity = Connectivity();
+  final Connectivity connectivity = Connectivity();
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
-  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
   @override
   void initState() {
     super.initState();
     initConnectivity();
-    _connectivitySubscription = connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-    
+    _connectivitySubscription =
+        connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
   @override
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initConnectivity() async {
-    late  List<ConnectivityResult> result;
+    late List<ConnectivityResult> result;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       result = await connectivity.checkConnectivity();
@@ -88,14 +89,16 @@ class _MyAppState extends State<MyApp> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(height: 2), // Add some space between title and message
+                  const SizedBox(
+                      height: 2), // Add some space between title and message
                   Text(message, style: const TextStyle(color: Colors.grey)),
                 ],
               ),
             ],
           ),
         ),
-        duration: const Duration(days: 365), // Make the snackbar last indefinitely
+        duration:
+            const Duration(days: 365), // Make the snackbar last indefinitely
       ),
     );
   }
@@ -104,8 +107,8 @@ class _MyAppState extends State<MyApp> {
     _scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
   }
 
-   Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
-  log('_updateConnectionStatus');
+  Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
+    log('_updateConnectionStatus');
     setState(() {
       _connectionStatus = result;
     });
@@ -114,7 +117,7 @@ class _MyAppState extends State<MyApp> {
       log('No internet connection');
       _showSnackbar('Check your network connection');
     } else {
-            log('hide connection');
+      log('hide connection');
 
       _hideSnackbar();
     }
@@ -124,20 +127,25 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit( designSize: const Size(360, 690), // Base design size (width, height)
-      minTextAdapt: true,
-      builder: (context ,child) {
-        return MaterialApp(
-          scaffoldMessengerKey: _scaffoldMessengerKey, // Attach the scaffoldMessengerKey here
-          debugShowCheckedModeBanner: false, // Removes the debug banner
-          title: 'Kot',
-          theme: ThemeData(
-            primaryColor: const Color.fromRGBO(17, 55, 127, 1), // Set RGBA color
-            fontFamily: 'Montserrat', // Apply Montserrat font globally
-          ),
-          home: const SplashScreen(), // Start with the splash screen
-        );
-      }
-    );
+    return ScreenUtilInit(
+        designSize: const Size(360, 690), // Base design size (width, height)
+        minTextAdapt: true,
+        builder: (context, child) {
+          return MultiBlocProvider(
+            providers: blocProviders(),
+            child: MaterialApp(
+              scaffoldMessengerKey:
+                  _scaffoldMessengerKey, // Attach the scaffoldMessengerKey here
+              debugShowCheckedModeBanner: false, // Removes the debug banner
+              title: 'Kot',
+              theme: ThemeData(
+                primaryColor:
+                    const Color.fromRGBO(17, 55, 127, 1), // Set RGBA color
+                fontFamily: 'Montserrat', // Apply Montserrat font globally
+              ),
+              home: const SplashScreen(), // Start with the splash screen
+            ),
+          );
+        });
   }
 }
